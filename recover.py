@@ -159,7 +159,7 @@ def linkTimeCheck(link):
                   'You will not get an error when you try again after a while.')
             return
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
-        print(f'Clock data:  {gelenveri[0].text}')
+        print(f'Clock data: {gelenveri[0].text}')
         firstandsecond_time = gelenveri[0].text.split(' ')
         first_time = firstandsecond_time[0].split('-')
         second_time = firstandsecond_time[1].split(':')

@@ -227,7 +227,6 @@ def find(timestamp, domain):
             i.join()
 
 def run_script():
-    # print('Find the broadcast link you want from Twitchtracker or Streamscharts site.')
     link = str(input('Enter the link: '))
     timestamp = linkTimeCheck(link)
     if timestamp == None:

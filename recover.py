@@ -7,8 +7,6 @@ from bs4 import BeautifulSoup
 import requests
 import webbrowser
 
-
-
 domains = [
 "https://vod-secure.twitch.tv",
 "https://vod-metro.twitch.tv",
@@ -41,7 +39,6 @@ domains = [
 
 find1c = 0
 
-
 def linkChecker(link):  # twitchtracker ve streamscharts destekli
     global streamername
     global vodID
@@ -63,56 +60,36 @@ def linkChecker(link):  # twitchtracker ve streamscharts destekli
         vodID = link[4]
         return 4
     else:
-        print('Check the link again. (An unsupported link has been entered or the link has an error.)')
+        print('An unsupported link has been entered or the link has an error. Check the link again.')
         return 0
-
 
 def linkTimeCheck(link):
     # global timestamp
     if linkChecker(link) == 2 or linkChecker(link) == 4:  # sadece 2 ve 4 dönerse girsin
-        print('Date and Time are checking..')
+        # print('Date and Time are checking..')
         r = requests.get(link)
-
         soup = BeautifulSoup(r.content, 'html.parser')
-
         gelenveri = soup.find_all('time', 'ml-2 font-bold')
-
-
         try:
             time = gelenveri[0].text
         except:
-            print('You probably got into cloudflare for bots.(could not find time data) There is nothing I can do for this error for now. \n'
-                  'Please fork if you can bypass this cloudflare. \n'
-                  'You will not get an error when you try again after a while. \n'
-                  'So try again after a while. ')
+            print('Could not find time data. You probably got into Cloudflare for bots.\n'
+                  'You will not get an error when you try again after a while.')
             return
-
-
         if '\n' in time:
             time = time.replace('\n', '')
-
         if ',' in time:
             time = time.replace(',', '')
-
         print(f'Clock data: {time}')
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
-
         time = time.split(' ')
-
         hoursandminut = time[3]
-
         hoursandminut = hoursandminut.split(':')
-
         day = int(time[0])
-
         month = time[1]
-
         year = int(time[2])
-
         hour = int(hoursandminut[0])
-
         minute = int(hoursandminut[1])
-
         def months(month):
             if month == 'Jan':
                 return 1
@@ -140,20 +117,13 @@ def linkTimeCheck(link):
                 return 12
             else:
                 return 0
-
         month = months(month)
-
         second = 60
-
-        timestamp = str(year) + '-' + str(month) + '-' + str(day) + '-' + str(hour) + '-' + str(minute) + '-' + str(
-            second)
-
-        print(f'timestamp', timestamp)
+        timestamp = str(year) + '-' + str(month) + '-' + str(day) + '-' + str(hour) + '-' + str(minute) + '-' + str(second)
+        # print(f'timestamp', timestamp)
         return timestamp
-
     elif linkChecker(link) == 1 or linkChecker(link) == 3:
-        print('Date and Time are checking...')
-        
+        # print('Date and Time are checking...')
         useragent = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
@@ -177,59 +147,32 @@ def linkTimeCheck(link):
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 Edg/103.0.1264.77",
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 Edg/103.0.1264.77",
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36']
-        
-        
         header = {
             'user-agent': '{random.choice(useragent)}'
         }
-        
-        
-
-
         r = requests.get(link, headers=header)
-
         soup = BeautifulSoup(r.content, 'html.parser')
-
         gelenveri = soup.find_all('div', 'stream-timestamp-dt')
-
-
         try:
             time = gelenveri[0].text
         except:
-            print('You probably got into cloudflare for bots.(could not find time data) There is nothing I can do for this error for now. \n'
-                  'Please fork if you can bypass this cloudflare. \n'
-                  'You will not get an error when you try again after a while. \n'
-                  'So try again after a while. ')
+            print('Could not find time data. You probably got into Cloudflare for bots.\n'
+                  'You will not get an error when you try again after a while.')
             return
-
-
         print(f'Clock data:  {gelenveri[0].text}')
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
-
         firstandsecond_time = gelenveri[0].text.split(' ')
-
         first_time = firstandsecond_time[0].split('-')
         second_time = firstandsecond_time[1].split(':')
-
         day = int(first_time[2])
-
         month = int(first_time[1])
-
         year = int(first_time[0])
-
         hour = int(second_time[0])
-
         minute = int(second_time[1])
-
         second = int(second_time[2])
-
-        timestamp = str(year) + '-' + str(month) + '-' + str(day) + '-' + str(hour) + '-' + str(minute) + '-' + str(
-            second)
-
-        print(f'timestamp', timestamp)
-
+        timestamp = str(year) + '-' + str(month) + '-' + str(day) + '-' + str(hour) + '-' + str(minute) + '-' + str(second)
+        # print(f'timestamp', timestamp)
         return timestamp
-
     elif linkChecker(link) == 0:
         print('You entered an unsupported link.')
         return 0
@@ -237,11 +180,9 @@ def linkTimeCheck(link):
         print('An unknown error has occurred.')
         return None
 
-
 def totimestamp(dt, epoch=datetime.datetime(1970, 1, 1)):
     td = dt - epoch
     return (td.microseconds + (td.seconds + td.days * 86400) * 10 ** 6) / 10 ** 6
-
 
 def find(timestamp, domain):
     timestamp = timestamp.split('-')
@@ -260,7 +201,7 @@ def find(timestamp, domain):
             pass
         else:
             print(url)
-            #webbrowser.open(url)
+            # webbrowser.open(url)
             find1c = 1
 
     threads = []
@@ -268,68 +209,44 @@ def find(timestamp, domain):
     if second == 60:
         for i in range(60):
             seconds = i
-
             td = datetime.datetime(year, month, day, hour, minute, seconds)
-
             converted_timestamp = totimestamp(td)
-
             formattedstring = streamername + "_" + vodID + "_" + str(int(converted_timestamp))
-
             hash = str(hashlib.sha1(formattedstring.encode('utf-8')).hexdigest())
-
             requiredhash = hash[:20]
-
             finalformattedstring = requiredhash + '_' + formattedstring
-
             url = f"{domain}/{finalformattedstring}/chunked/index-dvr.m3u8"
-
             threads.append(Thread(target=check, args=(url,)))
-
         for i in threads:
             i.start()
         for i in threads:
             i.join()
     else:
         td = datetime.datetime(year, month, day, hour, minute, second)
-
         converted_timestamp = totimestamp(td)
-
         formattedstring = streamername + "_" + vodID + "_" + str(int(converted_timestamp))
-
         hash = str(hashlib.sha1(formattedstring.encode('utf-8')).hexdigest())
-
         requiredhash = hash[:20]
-
         finalformattedstring = requiredhash + '_' + formattedstring
-
         url = f"{domain}/{finalformattedstring}/chunked/index-dvr.m3u8"
-
         threads.append(Thread(target=check, args=(url,)))
-
         for i in threads:
             i.start()
         for i in threads:
             i.join()
 
-
-print('Find the broadcast link you want from Twitchtracker or Streamscharts site.')
-link = str(input('Enter the link:'))
-
-timestamp = linkTimeCheck(link)
-
-if timestamp == None:
-    quit()
-
-for domain in domains:
+def run_script():
+    # print('Find the broadcast link you want from Twitchtracker or Streamscharts site.')
+    link = str(input('Enter the link: '))
+    timestamp = linkTimeCheck(link)
+    if timestamp == None:
+        quit()
+    for domain in domains:
+        if find1c == 0:
+            find(timestamp, domain)
+        else:
+            pass
     if find1c == 0:
-        find(timestamp, domain)
-    else:
-        pass
+        print('No File Found on Twitch Servers.')
 
-if find1c == 0:
-    print('No File Found on Twitch Servers.')
-
-if find1c == 1:
-    time.sleep(10)
-
-
+run_script()

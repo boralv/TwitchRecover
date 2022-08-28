@@ -73,7 +73,7 @@ def linkTimeCheck(link):
         if ',' in time:
             time = time.replace(',', '')
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
-        print(f'Clock data: {time}')
+        print(f'Time: {time}')
         time = time.split(' ')
         hoursandminut = time[3]
         hoursandminut = hoursandminut.split(':')
@@ -152,7 +152,7 @@ def linkTimeCheck(link):
                   'You will not get an error when you try again after a while.')
             return
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
-        print(f'Clock data: {gelenveri[0].text}')
+        print(f'Time: {time}')
         firstandsecond_time = gelenveri[0].text.split(' ')
         first_time = firstandsecond_time[0].split('-')
         second_time = firstandsecond_time[1].split(':')
@@ -199,8 +199,7 @@ def find(timestamp, domain):
     threads = []
 
     if second == 60:
-        for i in range(60):
-            seconds = i
+        for seconds in range(60):
             td = datetime.datetime(year, month, day, hour, minute, seconds)
             converted_timestamp = totimestamp(td)
             formattedstring = streamername + "_" + vodID + "_" + str(int(converted_timestamp))

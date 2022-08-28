@@ -66,7 +66,7 @@ def linkChecker(link):  # twitchtracker ve streamscharts destekli
 def linkTimeCheck(link):
     # global timestamp
     if linkChecker(link) == 2 or linkChecker(link) == 4:  # sadece 2 ve 4 dönerse girsin
-        # print('Date and Time are checking..')
+        # Streams Charts
         r = requests.get(link)
         soup = BeautifulSoup(r.content, 'html.parser')
         gelenveri = soup.find_all('time', 'ml-2 font-bold')
@@ -123,7 +123,7 @@ def linkTimeCheck(link):
         # print(f'timestamp', timestamp)
         return timestamp
     elif linkChecker(link) == 1 or linkChecker(link) == 3:
-        # print('Date and Time are checking...')
+        # Twitch Tracker
         useragent = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",

@@ -79,8 +79,8 @@ def linkTimeCheck(link):
             time = time.replace('\n', '')
         if ',' in time:
             time = time.replace(',', '')
-        print(f'Clock data: {time}')
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
+        print(f'Clock data: {time}')
         time = time.split(' ')
         hoursandminut = time[3]
         hoursandminut = hoursandminut.split(':')
@@ -158,8 +158,8 @@ def linkTimeCheck(link):
             print('Could not find time data. You probably got into Cloudflare for bots.\n'
                   'You will not get an error when you try again after a while.')
             return
-        print(f'Clock data:  {gelenveri[0].text}')
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
+        print(f'Clock data:  {gelenveri[0].text}')
         firstandsecond_time = gelenveri[0].text.split(' ')
         first_time = firstandsecond_time[0].split('-')
         second_time = firstandsecond_time[1].split(':')

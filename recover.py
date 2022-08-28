@@ -1,7 +1,6 @@
 import datetime
 import hashlib
 import time
-import urllib.request
 from threading import Thread
 from bs4 import BeautifulSoup
 import requests
@@ -189,12 +188,12 @@ def find(timestamp, domain):
     def check(url):
         global find1c
         try:
-            urllib.request.urlopen(url)
-        except urllib.error.HTTPError:
-            pass
+            r = requests.get(url)
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e)
         else:
-            print(url)
             # webbrowser.open(url)
+            print(url)
             find1c = 1
 
     threads = []

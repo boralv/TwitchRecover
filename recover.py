@@ -42,29 +42,23 @@ def linkChecker(link):  # twitchtracker ve streamscharts destekli
     global streamername
     global vodID
     link = link.split('/')
-    if link[2] == 'twitchtracker.com':
-        streamername = link[3]
-        vodID = link[5]
+    if 'twitchtracker.com' in link:
+        index = link.index('twitchtracker.com')
+        streamername = link[index+1]
+        vodID = link[index+3]
         return 1
-    elif link[2] == 'streamscharts.com':
-        streamername = link[4]
-        vodID = link[6]
+    elif 'streamscharts.com' in link:
+        index = link.index('streamscharts.com')
+        streamername = link[index+2]
+        vodID = link[index+4]
         return 2
-    elif link[0] == 'twitchtracker.com':
-        streamername = link[1]
-        vodID = link[3]
-        return 3
-    elif link[0] == 'streamscharts.com':
-        streamername = link[2]
-        vodID = link[4]
-        return 4
     else:
         print('An unsupported link has been entered or the link has an error. Check the link again.')
         return 0
 
 def linkTimeCheck(link):
     # global timestamp
-    if linkChecker(link) == 2 or linkChecker(link) == 4:  # sadece 2 ve 4 dönerse girsin
+    if linkChecker(link) == 2:
         # Streams Charts
         r = requests.get(link)
         soup = BeautifulSoup(r.content, 'html.parser')
@@ -121,7 +115,7 @@ def linkTimeCheck(link):
         timestamp = str(year) + '-' + str(month) + '-' + str(day) + '-' + str(hour) + '-' + str(minute) + '-' + str(second)
         # print(f'timestamp', timestamp)
         return timestamp
-    elif linkChecker(link) == 1 or linkChecker(link) == 3:
+    elif linkChecker(link) == 1:
         # Twitch Tracker
         useragent = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",

@@ -5,6 +5,7 @@ from threading import Thread
 from bs4 import BeautifulSoup
 import requests
 import webbrowser
+import random
 
 domains = ["https://vod-secure.twitch.tv",
            "https://vod-metro.twitch.tv",
@@ -57,8 +58,7 @@ def linkChecker(link):  # twitchtracker ve streamscharts destekli
 
 def linkTimeCheck(link):
     # global timestamp
-    if linkChecker(link) == 2:
-        # Streams Charts
+    if linkChecker(link) == 2: # Streamscharts
         r = requests.get(link)
         soup = BeautifulSoup(r.content, 'html.parser')
         gelenveri = soup.find_all('time', 'ml-2 font-bold')
@@ -114,8 +114,7 @@ def linkTimeCheck(link):
         timestamp = str(year) + '-' + str(month) + '-' + str(day) + '-' + str(hour) + '-' + str(minute) + '-' + str(second)
         # print(f'timestamp', timestamp)
         return timestamp
-    elif linkChecker(link) == 1:
-        # Twitch Tracker
+    elif linkChecker(link) == 1: # Twitchtracker
         useragent = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
@@ -140,7 +139,7 @@ def linkTimeCheck(link):
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 Edg/103.0.1264.77",
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36']
         header = {
-            'user-agent': '{random.choice(useragent)}'
+            'user-agent': f'{random.choice(useragent)}'
         }
         r = requests.get(link, headers=header)
         soup = BeautifulSoup(r.content, 'html.parser')

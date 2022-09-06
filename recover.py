@@ -138,20 +138,25 @@ def linkTimeCheck(link):
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 Edg/103.0.1264.77",
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 Edg/103.0.1264.77",
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36']
+
         header = {
             'user-agent': f'{random.choice(useragent)}'
         }
+
         r = requests.get(link, headers=header)
         soup = BeautifulSoup(r.content, 'html.parser')
         gelenveri = soup.find_all('div', 'stream-timestamp-dt')
+
         try:
             time = gelenveri[0].text
         except:
             print('Could not find time data. You probably got into Cloudflare for bots.\n'
                   'You will not get an error when you try again after a while.')
             return
+
         print(f'Streamer name: {streamername} \nvodID: {vodID}')
         print(f'Time: {time}')
+        
         firstandsecond_time = gelenveri[0].text.split(' ')
         first_time = firstandsecond_time[0].split('-')
         second_time = firstandsecond_time[1].split(':')

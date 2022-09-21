@@ -21,4 +21,4 @@ Using a Twitch Tracker or Streams Charts link:
 ## How do I open an M3U8 link?
 
 Use the VLC media player.
-CTRL + N (open network stream) and paste this link.
+`CTRL + N` (open network stream) and paste this link.
